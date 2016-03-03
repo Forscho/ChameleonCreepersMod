@@ -35,7 +35,7 @@ public class BiomeColors {
                 }
                 else if(biome instanceof BiomeGenDesert)
                 {
-                    r += 225; g += 166; b += 218;
+                    r += 225; g += 218; b += 166;
                 }
                 else if(biome instanceof BiomeGenSnow)
                 {
