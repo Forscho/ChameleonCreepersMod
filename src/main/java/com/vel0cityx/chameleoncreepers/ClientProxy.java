@@ -15,7 +15,6 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent evt) {
         RenderingRegistry.registerEntityRenderingHandler(EntityCreeper.class,
                 new RenderChameleonCreeper());
-        MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
     }
 
     @Override
