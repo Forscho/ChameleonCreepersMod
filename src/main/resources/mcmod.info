@@ -1,0 +1,16 @@
+[
+{
+  "modid": "chameleoncreepers",
+  "name": "Chameleon Creepers",
+  "description": "Makes creepers harder to see by tinting their color based on the current biome",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/VelocityRa",
+  "updateUrl": "",
+  "authorList": ["Vel0cityX"],
+  "credits": "Forge",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
