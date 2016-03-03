@@ -360,7 +360,7 @@ public class RenderChameleonCreeper extends RendererLivingEntity
             //==========================================================================================================
             if(entityLivingBase.hurtTime <= 0 || entityLivingBase.deathTime > 0) {
 
-                int[] colorTint = BiomeColorsObj.getBiomeColors(entityLivingBase);
+                colorTint = BiomeColorsObj.getBiomeColors(entityLivingBase);
                 GL11.glColor4f(colorTint[0] / 255.f, colorTint[1] / 255.f, colorTint[2] / 255.f, 1.0F);
             }
             //==========================================================================================================
