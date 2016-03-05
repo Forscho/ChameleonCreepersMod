@@ -50,147 +50,14 @@ public class RenderChameleonCreeper extends RendererLivingEntity
     public static float NAME_TAG_RANGE = 64.0f;
     public static float NAME_TAG_RANGE_SNEAK = 32.0f;
 
-
-
     public RenderChameleonCreeper()
     {
         super(new ModelCreeper(), 0.5F);
     }
 
-    /**
-     * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
-     * entityLiving, partialTickTime
-     */
-    protected void preRenderCallback(EntityCreeper p_77041_1_, float p_77041_2_)
-    {
-        float f1 = p_77041_1_.getCreeperFlashIntensity(p_77041_2_);
-        float f2 = 1.0F + MathHelper.sin(f1 * 100.0F) * f1 * 0.01F;
-
-        if (f1 < 0.0F)
-        {
-            f1 = 0.0F;
-        }
-
-        if (f1 > 1.0F)
-        {
-            f1 = 1.0F;
-        }
-
-        f1 *= f1;
-        f1 *= f1;
-        float f3 = (1.0F + f1 * 0.4F) * f2;
-        float f4 = (1.0F + f1 * 0.1F) / f2;
-        GL11.glScalef(f3, f4, f3);
-    }
-
     public void doRender(EntityLiving p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float partialTickTime)
     {
         this.doRender((EntityLivingBase)p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, partialTickTime);
-    }
-    /**
-     * Returns an ARGB int color back. Args: entityLiving, lightBrightness, partialTickTime
-     */
-    protected int getColorMultiplier(EntityCreeper entityLiving, float lightBrightness, float partialTickTime)
-    {
-
-        /*var grey =  (r + g + b) / 3;
-        var grey2 = (new_r + new_g + new_b) / 3;
-
-        var dr =  grey - grey2 * 1;
-        var dg =  grey - grey2 * 1
-        var db =  grey - grey2 * 1;
-
-        tint_r = new_r + dr;
-        tint_g = new_g + dg;
-        tint_b = new_b _ db;*/
-
-        float f2 = entityLiving.getCreeperFlashIntensity(partialTickTime);
-
-        //System.out.print(f2+"\t");
-        if ((int)(f2 * 10.0F) % 2 == 0)
-        {
-            //System.out.print("*");
-            //System.out.print(lightBrightness+"\t");
-            //System.out.println(partialTickTime);
-            //int color = (int)(lightBrightness*255) << 24 | 0xFF0000;
-            //return color;
-            return 0; //return 0;
-        }
-        else
-        {
-            int i = (int)(f2 * 0.2F * 255.0F);
-
-            if (i < 0)
-            {
-                i = 0;
-            }
-
-            if (i > 255)
-            {
-                i = 255;
-            }
-
-            short short1 = 255;
-            short short2 = 255;
-            short short3 = 255;
-
-            //System.out.println("f2: "+f2+"RET: "+(i << 24 | short1 << 16 | short2 << 8 | short3));
-            return i << 24 | short1 << 16 | short2 << 8 | short3;
-        }
-    }
-
-    /**
-     * Queries whether should render the specified pass or not.
-     */
-    protected int shouldRenderPass(EntityCreeper p_77032_1_, int p_77032_2_, float p_77032_3_)
-    {
-        if (p_77032_1_.getPowered())
-        {
-            if (p_77032_1_.isInvisible())
-            {
-                GL11.glDepthMask(false);
-            }
-            else
-            {
-                GL11.glDepthMask(true);
-            }
-
-            if (p_77032_2_ == 1)
-            {
-                float f1 = (float)p_77032_1_.ticksExisted + p_77032_3_;
-                this.bindTexture(armoredCreeperTextures);
-                GL11.glMatrixMode(GL11.GL_TEXTURE);
-                GL11.glLoadIdentity();
-                float f2 = f1 * 0.01F;
-                float f3 = f1 * 0.01F;
-                GL11.glTranslatef(f2, f3, 0.0F);
-                this.setRenderPassModel(this.creeperModel);
-                GL11.glMatrixMode(GL11.GL_MODELVIEW);
-                GL11.glEnable(GL11.GL_BLEND);
-                float f4 = 0.5F;
-                GL11.glColor4f(f4, f4, f4, 1.0F);
-                GL11.glDisable(GL11.GL_LIGHTING);
-                GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
-
-                return 1;
-            }
-
-            if (p_77032_2_ == 2)
-            {
-                GL11.glMatrixMode(GL11.GL_TEXTURE);
-                GL11.glLoadIdentity();
-                GL11.glMatrixMode(GL11.GL_MODELVIEW);
-                GL11.glEnable(GL11.GL_LIGHTING);
-                GL11.glDisable(GL11.GL_BLEND);
-            }
-        }
-
-        return -1;
-    }
-
-    protected int inheritRenderPass(EntityCreeper p_77035_1_, int p_77035_2_, float p_77035_3_)
-    {
-        return -1;
     }
 
     /**
@@ -199,40 +66,6 @@ public class RenderChameleonCreeper extends RendererLivingEntity
     protected ResourceLocation getEntityTexture(EntityCreeper p_110775_1_)
     {
         return creeperTextures;
-    }
-
-    /**
-     * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
-     * entityLiving, partialTickTime
-     */
-    @Override
-    protected void preRenderCallback(EntityLivingBase p_77041_1_, float p_77041_2_)
-    {
-        this.preRenderCallback((EntityCreeper)p_77041_1_, p_77041_2_);
-    }
-
-    /**
-     * Returns an ARGB int color back. Args: entityLiving, lightBrightness, partialTickTime
-     */
-    @Override
-    protected int getColorMultiplier(EntityLivingBase p_77030_1_, float p_77030_2_, float p_77030_3_)
-    {
-        return this.getColorMultiplier((EntityCreeper)p_77030_1_, p_77030_2_, p_77030_3_);
-    }
-
-    /**
-     * Queries whether should render the specified pass or not.
-     */
-    @Override
-    protected int shouldRenderPass(EntityLivingBase p_77032_1_, int p_77032_2_, float p_77032_3_)
-    {
-        return this.shouldRenderPass((EntityCreeper)p_77032_1_, p_77032_2_, p_77032_3_);
-    }
-
-    @Override
-    protected int inheritRenderPass(EntityLivingBase p_77035_1_, int p_77035_2_, float p_77035_3_)
-    {
-        return this.inheritRenderPass((EntityCreeper)p_77035_1_, p_77035_2_, p_77035_3_);
     }
 
     /**
@@ -247,18 +80,13 @@ public class RenderChameleonCreeper extends RendererLivingEntity
     // From RenderLiving
     //******************************************************************************************************************
 
-
+    // ShouldRenderNameTag
     protected boolean func_110813_b(EntityLiving p_110813_1_)
     {
         return super.func_110813_b(p_110813_1_) && (p_110813_1_.getAlwaysRenderNameTagForRender() || p_110813_1_.hasCustomNameTag() && p_110813_1_ == this.renderManager.field_147941_i);
     }
 
-    private double func_110828_a(double p_110828_1_, double p_110828_3_, double p_110828_5_)
-    {
-        return p_110828_1_ + (p_110828_3_ - p_110828_1_) * p_110828_5_;
-    }
-
-
+    // ShouldRenderNameTag
     @Override
     protected boolean func_110813_b(EntityLivingBase p_110813_1_)
     {
