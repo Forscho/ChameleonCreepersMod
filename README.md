@@ -9,9 +9,7 @@ Creepers are very easy to spot and therefore very easy to avoid. This mod aims t
 Bug reports, feedback and feature requests welcome :)
 
 ## Binaries
-[[1.7.10]ChameleonCreepers-v1.0 (Mediafire)]()
-
-[1.8.9]ChameleonCreepers-v1.0 (coming soon™ maybe, custom renderers on 1.8.x are a pain)
+(Check the Minecraft Forum thread below)
 
 ## Credits/Inspiration
 This video by SimplySarc:
