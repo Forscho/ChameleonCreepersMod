@@ -1,20 +1,47 @@
 package com.vel0cityx.chameleoncreepers;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraftforge.common.MinecraftForge;
 
 /**
  * Created by Nikos on 3/3/2016.
  */
 public class ClientProxy extends CommonProxy {
+
+    private static final CreeperRenderFactory creeperRenderFactory = new CreeperRenderFactory();
+
+    public static boolean onlyUseGrassColors;
+
+    private static class CreeperRenderFactory implements IRenderFactory<EntityCreeper>
+    {
+        @Override
+        public Render<? super EntityCreeper> createRenderFor(RenderManager manager)
+        {
+            return new RenderChameleonCreeper(manager);
+        }
+    }
+
     @Override
     public void preInit(FMLPreInitializationEvent evt) {
+
+        Configuration config = new Configuration(evt.getSuggestedConfigurationFile());
+
+        config.load();
+
+        onlyUseGrassColors = config.getBoolean("onlyUseGrassColors", Configuration.CATEGORY_CLIENT,
+                false, "Whether creepers should be limited to only biome(green-ish) colors.");
+
+        config.save();
+
         RenderingRegistry.registerEntityRenderingHandler(EntityCreeper.class,
-                new RenderChameleonCreeper());
+                creeperRenderFactory);
     }
 
     @Override
@@ -26,4 +53,5 @@ public class ClientProxy extends CommonProxy {
     public void postInit(FMLPostInitializationEvent evt) {
         super.postInit(evt);
     }
+
 }
