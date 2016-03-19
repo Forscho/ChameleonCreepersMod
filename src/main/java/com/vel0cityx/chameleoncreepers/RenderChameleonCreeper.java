@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerCreeperCharge;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -22,7 +22,6 @@ import com.vel0cityx.chameleoncreepers.ClientProxy;
  */
 
 public class RenderChameleonCreeper extends RenderLiving<EntityCreeper> {
-
     private ModelCreeper creeperModel;
     protected ResourceLocation npcTexture = new ResourceLocation(ChameleonCreepersMod.MODID+":"+"textures/entity/creeper/chameleoncreeper.png");
 
@@ -32,7 +31,6 @@ public class RenderChameleonCreeper extends RenderLiving<EntityCreeper> {
     {
         super(renderManagerIn, new ModelCreeper(), 0.5F);
         this.addLayer(new LayerCreeperCharge(new RenderCreeper(renderManager)));
-        //creeperModel
     }
 
     /**
@@ -73,7 +71,6 @@ public class RenderChameleonCreeper extends RenderLiving<EntityCreeper> {
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-
     @Override
     protected ResourceLocation getEntityTexture(EntityCreeper entity)
     {
@@ -153,11 +150,6 @@ public class RenderChameleonCreeper extends RenderLiving<EntityCreeper> {
                 GlStateManager.depthMask(true);
             }
         }
-    }
-
-    @Override
-    public void func_177105_a(EntityCreeper entityLivingIn, float partialTicks) {
-        super.func_177105_a(entityLivingIn, partialTicks);
     }
 
     @Override

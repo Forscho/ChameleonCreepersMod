@@ -5,19 +5,15 @@ import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.*;
-import net.minecraftforge.fml.common.registry.GameData;
-import com.vel0cityx.chameleoncreepers.ClientProxy;
 
 /**
  * Created by Nikos on 3/3/2016.
  */
 public class BiomeColors {
-
     // Return the average color of whatever blocks are below, not just grass
     public static int[] getBlockColors(EntityLivingBase creeper)
     {
