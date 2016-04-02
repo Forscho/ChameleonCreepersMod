@@ -13,9 +13,13 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import com.vel0cityx.chameleoncreepers.ClientProxy;
+import org.lwjgl.opengl.GLContext;
+
+import java.nio.FloatBuffer;
 
 /**
  * Created by Nikos on 6/3/2016.
@@ -24,6 +28,8 @@ import com.vel0cityx.chameleoncreepers.ClientProxy;
 public class RenderChameleonCreeper extends RenderLiving<EntityCreeper> {
     private ModelCreeper creeperModel;
     protected ResourceLocation npcTexture = new ResourceLocation(ChameleonCreepersMod.MODID+":"+"textures/entity/creeper/chameleoncreeper.png");
+
+    private FloatBuffer currentGLColor = BufferUtils.createFloatBuffer(16);
 
     private static final ResourceLocation creeperTextures = new ResourceLocation(ChameleonCreepersMod.MODID+":"+"textures/entity/creeper/chameleoncreeper.png");
 
@@ -92,13 +98,6 @@ public class RenderChameleonCreeper extends RenderLiving<EntityCreeper> {
      * handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic
      * (Render<T extends Entity>) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doe
-     *
-     * @param entity
-     * @param x
-     * @param y
-     * @param z
-     * @param entityYaw
-     * @param partialTicks
      */
     @Override
     public void doRender(EntityCreeper entity, double x, double y, double z, float entityYaw, float partialTicks) {
@@ -134,13 +133,19 @@ public class RenderChameleonCreeper extends RenderLiving<EntityCreeper> {
             //==========================================================================================================
             if(entitylivingbaseIn.hurtTime <= 0 || entitylivingbaseIn.deathTime > 0) {
 
-                int[] colorTint = shouldOnlyUseGrassColors() ? BiomeColors.getBiomeColors(entitylivingbaseIn) : BiomeColors.getBlockColors(entitylivingbaseIn);
+                // Save the current OpenGL color to re-set it later
+                GL11.glGetFloat(GL11.GL_CURRENT_COLOR, currentGLColor);
+
+                int[] colorTint = BiomeColors.getBlockColors(entitylivingbaseIn, shouldOnlyUseGrassColors());
                 GL11.glColor4f(colorTint[0] / 255.f, colorTint[1] / 255.f, colorTint[2] / 255.f, 1.0F);
             }
             //==========================================================================================================
             // END OF MAGIC
 
             this.mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+
+            // Re-set the GL color
+            GL11.glColor4f(currentGLColor.get(0),currentGLColor.get(1),currentGLColor.get(2),currentGLColor.get(3));
 
             if (flag1)
             {
