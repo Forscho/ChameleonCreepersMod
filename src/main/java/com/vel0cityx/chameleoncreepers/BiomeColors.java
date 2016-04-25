@@ -1,9 +1,7 @@
 package com.vel0cityx.chameleoncreepers;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.BlockLeaves;
+import jline.internal.Log;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -51,7 +49,8 @@ public class BiomeColors {
                     }
 
                     // Only return biome colors (greens)
-                    if (onlyDoBiomeColors || blockCloseToCreeper instanceof BlockGrass || blockCloseToCreeper instanceof BlockLeaves) {
+                    if (onlyDoBiomeColors || blockCloseToCreeper instanceof BlockGrass || blockCloseToCreeper instanceof BlockTallGrass ||
+                            blockCloseToCreeper instanceof BlockLeaves) {
                         BiomeGenBase biome = creeper.worldObj.getBiomeGenForCoords(new BlockPos(entityX + x0, entityY + y0, entityZ + z0));
                         currCol = biome.getGrassColorAtPos(new BlockPos(entityX + x0, entityY + y0, entityZ + z0));
                     }

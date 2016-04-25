@@ -20,12 +20,12 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.9-1.2"
+version = "1.9-1.4"
 group= "com.vel0cityx.chameleoncreepers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ChameleonCreepers"
 
 minecraft {
-    version = "1.9-12.16.0.1767-1.9"
+    version = "1.9-12.16.0.1865-1.9"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
