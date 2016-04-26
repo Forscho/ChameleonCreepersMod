@@ -25,4 +25,4 @@ But you can modify this mod. If you want to release it, please notify me.
 You can use this mod in your videos.
 If you want to introduce this mod, please reply in the Minecraft Forum thread.
 
-*Note:* For the Minecraft 1.9 code there's a seperate branch and for 1.7.10 go [here](https://github.com/VelocityRa/ChameleonCreepersMod/tree/a67cafe12b270a904542b7599c0b3ff91cae2cc7).
+*Note:* For the Minecraft 1.7.10 code there's a seperate branch and for 1.8.9 go [here](https://github.com/VelocityRa/ChameleonCreepersMod/tree/4fbb80c0859aa372eba958286f250b47606c98fb).
