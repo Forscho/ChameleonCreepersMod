@@ -2,10 +2,14 @@ package com.vel0cityx.chameleoncreepers;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,6 +23,11 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 
 /**
  * Created by Nikos on 1/3/2016.
@@ -28,14 +37,10 @@ import org.lwjgl.opengl.GL12;
 @SideOnly(Side.CLIENT)
 public class RenderChameleonCreeper extends RendererLivingEntity
 {
-    private static final ResourceLocation armoredCreeperTextures = new ResourceLocation(
-            ChameleonCreepersMod.MODID+":"+"textures/entity/creeper/chameleoncreeper_armor.png");
-    private static final ResourceLocation creeperTextures = new ResourceLocation(
-            ChameleonCreepersMod.MODID+":"+"textures/entity/creeper/chameleoncreeper.png");
-    /** The creeper model. */
-    private ModelBase creeperModel = new ModelCreeper(2.0F);
-    //private static final String __OBFID = "CL_00000985";
 
+    private static final ResourceLocation vanillaCreeperTexture = new ResourceLocation("textures/entity/creeper/creeper.png");
+    /** The creeper model. */
+    public static ResourceLocation grayscaleCreeperTexture;
 
     //From RendererLivingEntity
     //******************************************************************************************************************
@@ -60,12 +65,36 @@ public class RenderChameleonCreeper extends RendererLivingEntity
         this.doRender((EntityLivingBase)p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, partialTickTime);
     }
 
+    public static void convertTextureToGrayScale() throws IOException
+    {
+        IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
+        try
+        {
+            BufferedImage vanillaCreeperTextureData = ImageIO.read(resourceManager.getResource(vanillaCreeperTexture).getInputStream());
+
+            // Do the conversion to grayscale
+            BufferedImage creeperTextureData = new BufferedImage(vanillaCreeperTextureData.getWidth(), vanillaCreeperTextureData.getHeight(), BufferedImage.TYPE_USHORT_GRAY);
+            Graphics g = creeperTextureData.getGraphics();
+            g.drawImage(vanillaCreeperTextureData, 0, 0, null);
+            g.dispose();
+
+            DynamicTexture dynamicGrayscaleCreeperTexture = new DynamicTexture(creeperTextureData);
+
+            grayscaleCreeperTexture = new ResourceLocation(ChameleonCreepersMod.MODID, "textures/entity/creeper/chameleoncreeper.png");
+            Minecraft.getMinecraft().getTextureManager().loadTexture(grayscaleCreeperTexture, dynamicGrayscaleCreeperTexture);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
     protected ResourceLocation getEntityTexture(EntityCreeper p_110775_1_)
     {
-        return creeperTextures;
+        return grayscaleCreeperTexture;
     }
 
     /**
