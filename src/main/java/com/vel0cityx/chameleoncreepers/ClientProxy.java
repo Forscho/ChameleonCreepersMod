@@ -2,6 +2,7 @@ package com.vel0cityx.chameleoncreepers;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -9,6 +10,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.entity.monster.EntityCreeper;
+
+import java.io.IOException;
 
 /**
  * Created by Nikos on 3/3/2016.
@@ -24,7 +27,16 @@ public class ClientProxy extends CommonProxy {
         @Override
         public Render<? super EntityCreeper> createRenderFor(RenderManager manager)
         {
-            return new RenderChameleonCreeper(manager);
+            RenderChameleonCreeper r;
+            try {
+                r = new RenderChameleonCreeper(manager);
+            }
+            catch (IOException ie)
+            {
+                r = null;
+                ie.printStackTrace();
+            }
+            return r;
         }
     }
 
@@ -42,6 +54,8 @@ public class ClientProxy extends CommonProxy {
 
         RenderingRegistry.registerEntityRenderingHandler(EntityCreeper.class,
                 creeperRenderFactory);
+
+        MinecraftForge.EVENT_BUS.register(new EventHandlerClient());
     }
 
     @Override
