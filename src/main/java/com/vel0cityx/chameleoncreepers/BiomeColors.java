@@ -64,6 +64,11 @@ public class BiomeColors {
             }
         }
 
+        // Default to Grey color if the Creeper is falling from the air (without any blocks near it)
+        if(blocksCalculated == 0) {
+            return new int[]{135,135,135};
+        }
+
         r /= blocksCalculated;
         g /= blocksCalculated;
         b /= blocksCalculated;
