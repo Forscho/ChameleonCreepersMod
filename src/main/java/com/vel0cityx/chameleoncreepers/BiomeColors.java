@@ -40,7 +40,7 @@ public class BiomeColors {
 
                     Block blockUnderCreeper = creeper.worldObj.getBlock(entityX + x0, (int) (entityY - .5), entityZ + z0);
 
-                    // Look up to 2 blocks below, if botha are Air disregard that x,y value
+                    // Look up to 2 blocks below, if both are Air disregard that x,y value
                     if (blockUnderCreeper instanceof BlockAir) {
                         blockUnderCreeper = creeper.worldObj.getBlock(entityX + x0, (int) (entityY - 1.5), entityZ + z0);
                         if (blockUnderCreeper instanceof BlockAir) {
@@ -60,6 +60,11 @@ public class BiomeColors {
                     b += currCol & 255;
                 }
             }
+        }
+
+        // Default to Grey color if the Creeper is falling from the air (without any blocks near it)
+        if(blocksCalculated == 0) {
+            return new int[]{135,135,135};
         }
 
         r /= blocksCalculated;
