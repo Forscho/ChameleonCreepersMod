@@ -1,6 +1,5 @@
 package com.vel0cityx.chameleoncreepers;
 
-import jline.internal.Log;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +30,7 @@ public class BiomeColors {
             return new int[]{64, 64, 255};
         }
 
-        if (creeper.isInsideOfMaterial(Material.lava)) {
+        if (creeper.isInsideOfMaterial(Material.LAVA)) {
             return new int[]{255, 64, 64};
         }
 
@@ -39,7 +38,7 @@ public class BiomeColors {
             for (int y0 = 0; y0 <= 2; ++y0) {
                 for (int z0 = -1; z0 <= 1; ++z0) {
 
-                    IBlockState iBlockState = creeper.worldObj.getBlockState(new BlockPos(entityX + x0, (int) (entityY + y0 - .5), entityZ + z0));
+                    IBlockState iBlockState = creeper.world.getBlockState(new BlockPos(entityX + x0, (int) (entityY + y0 - .5), entityZ + z0));
 
                     Block blockCloseToCreeper = iBlockState.getBlock();
 
@@ -51,7 +50,7 @@ public class BiomeColors {
                     // Only return biome colors (greens)
                     if (onlyDoBiomeColors || blockCloseToCreeper instanceof BlockGrass || blockCloseToCreeper instanceof BlockTallGrass ||
                             blockCloseToCreeper instanceof BlockLeaves) {
-                        BiomeGenBase biome = creeper.worldObj.getBiomeGenForCoords(new BlockPos(entityX + x0, entityY + y0, entityZ + z0));
+                        Biome biome = creeper.world.getBiomeForCoordsBody(new BlockPos(entityX + x0, entityY + y0, entityZ + z0));
                         currCol = biome.getGrassColorAtPos(new BlockPos(entityX + x0, entityY + y0, entityZ + z0));
                     }
                     else {
