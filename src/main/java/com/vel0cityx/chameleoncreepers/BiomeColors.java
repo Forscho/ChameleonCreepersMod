@@ -26,12 +26,14 @@ public class BiomeColors {
 
         int blocksCalculated = 3 * 3 * 3;
 
-        if (creeper.isInWater()) {
-            return new int[]{64, 64, 255};
-        }
+        if (!onlyDoBiomeColors) {
+            if (creeper.isInWater()) {
+                return new int[]{64, 64, 255};
+            }
 
-        if (creeper.isInsideOfMaterial(Material.LAVA)) {
-            return new int[]{255, 64, 64};
+            if (creeper.isInsideOfMaterial(Material.LAVA)) {
+                return new int[]{255, 64, 64};
+            }
         }
 
         for (int x0 = -1; x0 <= 1; ++x0) {
